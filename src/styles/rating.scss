@@ -1,0 +1,19 @@
+.line {
+  --index: 0;
+  background-color: skyblue;
+  outline: 2px solid red;
+  display: flex;
+
+  .block {
+    animation-delay: calc(
+      2 * var(--duration) + var(--index) * var(--duration) / 5
+    );
+  }
+}
+
+.typing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 300px;
+}
