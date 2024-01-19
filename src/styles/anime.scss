@@ -1,0 +1,197 @@
+.anime-from-above {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(-50vh);
+  animation: from-above-anime calc(var(--duration) / 5) forwards;
+
+  @keyframes from-above-anime {
+    from {
+      opacity: 0;
+      filter: blur(5px);
+      transform: translateY(-50vh);
+    }
+
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+  }
+}
+
+.anime-from-left {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translate(-50vw);
+  animation: from-left-anime var(--duration) forwards;
+
+  @keyframes from-left-anime {
+    from {
+      opacity: 0;
+      filter: blur(5px);
+      transform: translate(-50vw);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translate(0);
+    }
+  }
+}
+
+.anime-from-bottom {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(50vh);
+  animation: from-bottom-anime var(--duration) forwards;
+
+  @keyframes from-bottom-anime {
+    from {
+      opacity: 0;
+      filter: blur(5px);
+      transform: translateY(50vh);
+    }
+
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+  }
+}
+
+.anime-to-below {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+  animation: to-below-anime calc(3 * var(--duration)) forwards;
+
+  @keyframes to-below-anime {
+    from {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+
+    to {
+      opacity: 0;
+      filter: blur(5px);
+      transform: translateY(50vh);
+    }
+  }
+}
+
+.anime-expand {
+  transform: scale(0.1, 0.1);
+  animation: expand-x-anime var(--duration) forwards,
+    var(--duration) expand-y-anime var(--duration) forwards;
+
+  @keyframes expand-x-anime {
+    from {
+      transform: scale(0.1, 0.1);
+    }
+
+    to {
+      transform: scale(1, 0.1);
+    }
+  }
+
+  @keyframes expand-y-anime {
+    from {
+      transform: scale(1, 0.1);
+    }
+
+    to {
+      transform: scale(1, 1);
+    }
+  }
+}
+
+.anime-follow-path {
+  transform: translate(-500px, -300px);
+
+  .content {
+    background-color: var(--yellow);
+    opacity: 0;
+    filter: blur(5px);
+    offset-path: path("M 0 0 Q 50 200 500 300");
+    animation: follow-path-a-anime calc(5 * var(--duration)) forwards;
+    transform: translate(50%, 50%);
+  }
+
+  @keyframes follow-path-a-anime {
+    from {
+      background-color: var(--yellow);
+      opacity: 0;
+      filter: blur(5px);
+      offset-distance: 0%;
+      offset-rotate: 90deg;
+    }
+
+    10% {
+      opacity: 1;
+      filter: blur(0);
+    }
+
+    to {
+      background-color: var(--dark-blue);
+      opacity: 1;
+      filter: blur(0);
+      offset-distance: 100%;
+      offset-rotate: 0deg;
+    }
+  }
+}
+
+.anime-bump {
+  transform: scale(1) rotate(0deg);
+  animation: bump-anime calc(2 * var(--duration)) linear forwards;
+
+  @keyframes bump-anime {
+    from {
+      transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+      transform: scale(1.5) rotate(180deg);
+    }
+
+    to {
+      transform: scale(1) rotate(360deg);
+    }
+  }
+}
+
+.anime-flash {
+  fill: var(--orange);
+  animation: flash-anime calc(2 * var(--duration));
+
+  @keyframes flash-anime {
+    from {
+      fill: var(--orange);
+    }
+
+    50% {
+      fill: yellow;
+    }
+
+    to {
+      fill: var(--orange);
+    }
+  }
+}
+
+.anime-fade {
+  opacity: 1;
+  animation: fade-anime calc(3 * var(--duration)) forwards;
+
+  @keyframes fade-anime {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+}

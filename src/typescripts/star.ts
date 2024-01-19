@@ -23,17 +23,13 @@ function animate_star() {
   let interval = 0;
 
   star?.addEventListener("animationstart", (event) => {
-    console.log(event.target);
-    if (event.target.classList.contains("star"))
+    if ((event.target as Element).classList.contains("star"))
       interval = start_animation(rating, star);
   });
 
   star?.addEventListener("animationend", (event) => {
-    // console.log(event.target);
-    if ((event.target as Element).classList.contains("star")) {
-      // console.log(event.target);
+    if ((event.target as Element).classList.contains("star"))
       clearInterval(interval);
-    }
   });
 }
 

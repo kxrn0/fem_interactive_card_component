@@ -108,12 +108,13 @@
           height: 51px;
           display: grid;
           place-items: center;
-          transition: background-color var(--duration), color var(--duration);
           user-select: none;
           border-radius: 100%;
+          transition: background-color var(--duration), color var(--duration);
 
           @media (hover: hover) {
             &:hover {
+              background-color: var(--medium-gray);
               color: white;
             }
           }
@@ -132,7 +133,10 @@
     width: 100%;
     margin-top: 32px;
     transition: background-color var(--duration), color var(--duration);
-    animation-delay: calc(15 * var(--duration));
+
+    &.anime-from-bottom {
+      animation-delay: calc(15 * var(--duration));
+    }
 
     @media (hover: hover) {
       &:hover {
