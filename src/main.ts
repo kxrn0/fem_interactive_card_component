@@ -3,9 +3,10 @@ import "./styles/styles.scss";
 import "./styles/rating.scss";
 import "./typescripts/line";
 import "./typescripts/typing";
+import "./typescripts/star";
 
 function init() {
-  const form = document.querySelector("rating");
+  const form = document.querySelector(".rating");
 
   form?.addEventListener("submit", (event) => {
     event.preventDefault();

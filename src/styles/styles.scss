@@ -13,13 +13,22 @@
   --medium-gray: hsl(216, 12%, 54%);
   --dark-blue: hsl(213, 19%, 18%);
   --very-dark-blue: hsl(216, 12%, 8%);
+  --yellow: rgb(246, 246, 19, 0.85);
+  --black-gradient: radial-gradient(
+    98.96% 98.96% at 50% 0%,
+    #232a34 0%,
+    #181e27 100%
+  );
   --duration: 0.33s;
 }
 
 body {
+  background-color: var(--very-dark-blue);
   display: grid;
   place-items: center;
   min-height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
 @supports (font-variation-settings: normal) {
@@ -82,11 +91,9 @@ body {
 
 .fs-label {
   font-size: 16px;
-  line-height: 24px;
 
   @media screen and (max-width: 450px) {
     font-size: 14px;
-    line-height: 24px;
   }
 }
 
@@ -131,6 +138,47 @@ body {
   }
 }
 
+.anime-from-left {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translate(-50vw);
+  animation: from-left-anime var(--duration) forwards;
+
+  @keyframes from-left-anime {
+    from {
+      opacity: 0;
+      filter: blur(5px);
+      transform: translate(-50vw);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translate(0);
+    }
+  }
+}
+
+.anime-from-bottom {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(50vh);
+  animation: from-bottom-anime var(--duration) forwards;
+
+  @keyframes from-bottom-anime {
+    from {
+      opacity: 0;
+      filter: blur(5px);
+      transform: translateY(50vh);
+    }
+
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+  }
+}
+
 .anime-expand {
   transform: scale(0.1, 0.1);
   animation: expand-x-anime var(--duration) forwards,
@@ -153,6 +201,79 @@ body {
 
     to {
       transform: scale(1, 1);
+    }
+  }
+}
+
+.anime-follow-path {
+  transform: translate(-500px, -300px);
+
+  .content {
+    background-color: var(--yellow);
+    opacity: 0;
+    filter: blur(5px);
+    offset-path: path("M 0 0 Q 50 200 500 300");
+    animation: follow-path-a-anime calc(5 * var(--duration)) forwards;
+    transform: translate(50%, 50%);
+  }
+
+  @keyframes follow-path-a-anime {
+    from {
+      background-color: var(--yellow);
+      opacity: 0;
+      filter: blur(5px);
+      offset-distance: 0%;
+      offset-rotate: 90deg;
+    }
+
+    10% {
+      opacity: 1;
+      filter: blur(0);
+    }
+
+    to {
+      background-color: var(--dark-blue);
+      opacity: 1;
+      filter: blur(0);
+      offset-distance: 100%;
+      offset-rotate: 0deg;
+    }
+  }
+}
+
+.anime-bump {
+  transform: scale(1) rotate(0deg);
+  animation: bump-anime calc(2 * var(--duration)) linear forwards;
+
+  @keyframes bump-anime {
+    from {
+      transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+      transform: scale(1.5) rotate(180deg);
+    }
+
+    to {
+      transform: scale(1) rotate(360deg);
+    }
+  }
+}
+.anime-flash {
+  fill: var(--orange);
+  animation: flash-anime calc(2 * var(--duration));
+
+  @keyframes flash-anime {
+    from {
+      fill: var(--orange);
+    }
+
+    50% {
+      fill: yellow;
+    }
+
+    to {
+      fill: var(--orange);
     }
   }
 }

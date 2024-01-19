@@ -1,19 +1,144 @@
-.line {
-  --index: 0;
-  background-color: skyblue;
-  outline: 2px solid red;
-  display: flex;
+.rating {
+  background-image: var(--black-gradient);
+  padding: 32px;
+  border-radius: 30px;
 
-  .block {
-    animation-delay: calc(
-      2 * var(--duration) + var(--index) * var(--duration) / 5
-    );
+  .plume {
+    --top: 0;
+    --left: 0;
+    background: radial-gradient(rgba(255, 192, 32, 0.33), transparent);
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: var(--top);
+    left: var(--left);
+    border-radius: 100%;
+    animation: shrink calc(3 * var(--duration)) forwards;
+
+    @keyframes shrink {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(0);
+      }
+    }
   }
-}
 
-.typing {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  width: 300px;
+  .star-container {
+    position: relative;
+    z-index: 20;
+
+    .star {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 100%;
+      animation-delay: calc(15 * var(--duration));
+      position: relative;
+      z-index: 20;
+
+      svg {
+        animation-delay: calc(17 * var(--duration) + 2 * var(--duration));
+
+        path {
+          animation-delay: calc(17 * var(--duration) + 2 * var(--duration));
+        }
+      }
+    }
+  }
+
+  .line {
+    --index: 0;
+    color: white;
+    display: flex;
+    margin-top: 30px;
+
+    .block {
+      animation-delay: calc(
+        2 * var(--duration) + var(--index) * var(--duration) / 5
+      );
+    }
+  }
+
+  .typing {
+    color: vaR(--light-gray);
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 5px;
+    width: 340px;
+    height: 80px;
+    margin-top: 7px;
+  }
+
+  .choices {
+    display: flex;
+    gap: 22px;
+    margin-top: 24px;
+
+    li {
+      --index: 0;
+      animation-delay: calc(
+        13 * var(--duration) + var(--index) * var(--duration) / 2
+      );
+
+      label {
+        position: relative;
+
+        input[type="radio"] {
+          appearance: none;
+          position: absolute;
+
+          &:checked {
+            ~ span {
+              background-color: var(--orange);
+              color: white;
+            }
+          }
+        }
+
+        span {
+          background-color: var(--dark-blue);
+          color: var(--medium-gray);
+          position: relative;
+          width: 51px;
+          height: 51px;
+          display: grid;
+          place-items: center;
+          transition: background-color var(--duration), color var(--duration);
+          user-select: none;
+          border-radius: 100%;
+
+          @media (hover: hover) {
+            &:hover {
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .submit {
+    background-color: var(--orange);
+    color: white;
+    padding: 12px 0 10px 0;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 500px;
+    width: 100%;
+    margin-top: 32px;
+    transition: background-color var(--duration), color var(--duration);
+    animation-delay: calc(15 * var(--duration));
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: white;
+        color: var(--orange);
+      }
+    }
+  }
 }
