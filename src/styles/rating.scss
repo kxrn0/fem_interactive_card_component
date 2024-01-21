@@ -1,53 +1,222 @@
 .rating {
   background-image: var(--black-gradient);
-  padding: 32px;
   border-radius: 30px;
+  display: grid;
+  grid-template-areas: "stack";
 
-  .plume {
-    --top: 0;
-    --left: 0;
-    background: radial-gradient(rgba(255, 192, 32, 0.33), transparent);
-    width: 48px;
-    height: 48px;
-    position: absolute;
-    top: var(--top);
-    left: var(--left);
-    border-radius: 100%;
-    animation: shrink calc(3 * var(--duration)) forwards;
+  &.success,
+  &.error,
+  &.loading {
+    .form {
+      animation: disappear-anime calc(3 * var(--duration)) forwards;
+    }
+  }
 
-    @keyframes shrink {
-      from {
-        transform: scale(1);
-      }
+  // &.success, &.error {}
 
-      to {
-        transform: scale(0);
+  &.start:not(.loading) {
+    .loading-screen {
+      animation: leave-anime calc(2 * var(--duration)) forwards;
+    }
+  }
+
+  &.loading {
+    .loading-screen {
+      animation: arrive-anime calc(2 * var(--duration)) forwards;
+
+      .content {
+        .spinner {
+          animation-play-state: running;
+        }
       }
     }
   }
 
-  .star-container {
-    position: relative;
-    z-index: 20;
+  .form {
+    grid-area: stack;
+    padding: 32px;
 
-    .star {
+    .plume {
+      --top: 0;
+      --left: 0;
+      background: radial-gradient(rgba(255, 192, 32, 0.33), transparent);
       width: 48px;
       height: 48px;
-      display: grid;
-      place-items: center;
+      position: absolute;
+      top: var(--top);
+      left: var(--left);
       border-radius: 100%;
-      animation-delay: calc(15 * var(--duration));
-      position: relative;
-      z-index: 20;
+      animation: shrink calc(3 * var(--duration)) forwards;
 
-      svg {
-        animation-delay: calc(17 * var(--duration) + 2 * var(--duration));
+      @keyframes shrink {
+        from {
+          transform: scale(1);
+        }
 
-        path {
-          animation-delay: calc(17 * var(--duration) + 2 * var(--duration));
+        to {
+          transform: scale(0);
         }
       }
     }
+
+    .star-container {
+      position: relative;
+      z-index: 20;
+
+      .star {
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border-radius: 100%;
+        animation-delay: calc(15 * var(--duration));
+        position: relative;
+        z-index: 20;
+
+        svg {
+          animation-delay: calc(17 * var(--duration) + 2 * var(--duration));
+
+          path {
+            animation-delay: calc(17 * var(--duration) + 2 * var(--duration));
+          }
+        }
+      }
+    }
+
+    .choices {
+      display: flex;
+      gap: 22px;
+      margin-top: 24px;
+
+      li {
+        --index: 0;
+        animation-delay: calc(
+          13 * var(--duration) + var(--index) * var(--duration) / 2
+        );
+
+        label {
+          position: relative;
+
+          input[type="radio"] {
+            appearance: none;
+            position: absolute;
+
+            &:checked {
+              ~ span {
+                background-color: var(--orange);
+                color: white;
+              }
+            }
+          }
+
+          span {
+            background-color: var(--dark-blue);
+            color: var(--medium-gray);
+            position: relative;
+            width: 51px;
+            height: 51px;
+            display: grid;
+            place-items: center;
+            user-select: none;
+            border-radius: 100%;
+            transition: background-color var(--duration), color var(--duration);
+
+            @media (hover: hover) {
+              &:hover {
+                background-color: var(--medium-gray);
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .submit {
+      background-color: var(--orange);
+      color: white;
+      padding: 12px 0 10px 0;
+      border: none;
+      text-transform: uppercase;
+      border-radius: 500px;
+      width: 100%;
+      margin-top: 32px;
+      transition: background-color var(--duration), color var(--duration);
+
+      &.anime-from-bottom {
+        animation-delay: calc(15 * var(--duration));
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          background-color: white;
+          color: var(--orange);
+        }
+      }
+    }
+
+    .line {
+      .block {
+        animation-delay: calc(
+          2 * var(--duration) + var(--index) * var(--duration) / 5
+        );
+      }
+    }
+  }
+
+  .loading-screen {
+    grid-area: stack;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    visibility: hidden;
+
+    .content {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 100%;
+      outline: 2px solid skyblue;
+
+      .spinner {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-areas: "stack";
+        place-items: center;
+        align-content: center;
+        animation-play-state: paused;
+
+        .circle {
+          grid-area: stack;
+          background: skyblue;
+          width: 20px;
+          height: 20px;
+          border-radius: 100%;
+
+          &:first-child {
+            transform: translate(0, -333%);
+          }
+
+          &:nth-child(2) {
+            transform: rotate(120deg) translate(0, -333%);
+          }
+
+          &:last-child {
+            transform: rotate(240deg) translate(0, -333%);
+          }
+        }
+      }
+    }
+  }
+
+  .game-over-screen {
+    grid-area: stack;
+    position: relative;
+    visibility: hidden;
   }
 
   .line {
@@ -55,12 +224,6 @@
     color: white;
     display: flex;
     margin-top: 30px;
-
-    .block {
-      animation-delay: calc(
-        2 * var(--duration) + var(--index) * var(--duration) / 5
-      );
-    }
   }
 
   .typing {
@@ -72,77 +235,5 @@
     width: 340px;
     height: 80px;
     margin-top: 7px;
-  }
-
-  .choices {
-    display: flex;
-    gap: 22px;
-    margin-top: 24px;
-
-    li {
-      --index: 0;
-      animation-delay: calc(
-        13 * var(--duration) + var(--index) * var(--duration) / 2
-      );
-
-      label {
-        position: relative;
-
-        input[type="radio"] {
-          appearance: none;
-          position: absolute;
-
-          &:checked {
-            ~ span {
-              background-color: var(--orange);
-              color: white;
-            }
-          }
-        }
-
-        span {
-          background-color: var(--dark-blue);
-          color: var(--medium-gray);
-          position: relative;
-          width: 51px;
-          height: 51px;
-          display: grid;
-          place-items: center;
-          user-select: none;
-          border-radius: 100%;
-          transition: background-color var(--duration), color var(--duration);
-
-          @media (hover: hover) {
-            &:hover {
-              background-color: var(--medium-gray);
-              color: white;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .submit {
-    background-color: var(--orange);
-    color: white;
-    padding: 12px 0 10px 0;
-    border: none;
-    text-transform: uppercase;
-    border-radius: 500px;
-    width: 100%;
-    margin-top: 32px;
-    transition: background-color var(--duration), color var(--duration);
-
-    &.anime-from-bottom {
-      animation-delay: calc(15 * var(--duration));
-    }
-
-    @media (hover: hover) {
-      &:hover {
-        background-color: white;
-        color: var(--orange);
-      }
-    }
   }
 }

@@ -2,80 +2,82 @@ import "reset-css";
 import "./styles/styles.scss";
 import "./styles/anime.scss";
 import "./styles/rating.scss";
-import "./typescripts/line";
-import "./typescripts/typing";
-import "./typescripts/star";
+import animate_line from "./typescripts/animate_line";
+import animate_star from "./typescripts/star";
+import animate_typing from "./typescripts/typing";
+import fall from "./typescripts/fall";
 import random from "./typescripts/random";
 
-type BlockType = {
-  element: Element;
-  a: number;
-  t: number;
-  y: number;
-  vy: number;
-};
+async function submit(url: string, value: number) {
+  return await (
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ value }),
+    })
+  ).json();
+}
 
-function animate_blocks(blocks: BlockType[]) {
-  blocks.forEach((block) => {
-    const element = block.element as HTMLElement;
+function send_request(value: number) {
+  const url = "https://jsonplaceholder.typicode.com/posts";
 
-    element.classList.remove("anime-from-above");
-
-    element.style.setProperty("--y", `${block.y}px`);
-    element.style.setProperty("--a", `${block.a}deg`);
-
-    block.y += block.vy;
-    block.a += block.t;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        resolve(submit(url, value));
+      } catch (error) {
+        reject(error);
+      }
+    }, random(1000, 1500));
   });
 }
 
-function manufacture_blocks(
-  root: Element | Document = document,
-  identifier: string,
-  toRemove: string
-) {
-  return [...root.querySelectorAll(identifier)!].map((block) => {
-    if (toRemove) block.classList.remove(toRemove);
+function rate(form: HTMLFormElement) {
+  const rating = form.parentElement!;
+  const gameOverScreen = rating.querySelector(".game-over-screen")!;
+  const finalRating = gameOverScreen.querySelector(".final-rating")!;
+  const finalRatingValue = form["rating"].value;
 
-    return { element: block, a: 0, t: random(-1, 1), y: 0, vy: random(5, 10) };
-  });
+  finalRating.innerHTML = `You selected ${finalRatingValue} out of 5`;
 }
 
-function handle_submit(event: Event) {
+async function handle_submit(event: SubmitEvent) {
   event.preventDefault();
 
-  const intervals: number[] = [];
-  const title = document.querySelector(".fs-title.line")!;
-  const titBlocks = manufacture_blocks(title, ".block", "anime-from-above");
-  const intervalA = setInterval(() => animate_blocks(titBlocks), 16);
-  const typing = document.querySelector(".fs-body.typing")!;
-  const wordBlocks = manufacture_blocks(typing, "p:not(.sr-only)", "");
-  const intervalB = setInterval(() => animate_blocks(wordBlocks), 16);
-  const choices = document.querySelector(".choices")!;
-  const liBlocks = manufacture_blocks(choices, "li", "anime-from-left");
-  const intervalC = setInterval(() => animate_blocks(liBlocks), 16);
-  const submit = document.querySelector(".submit")!;
-  const star = document.querySelector(".star-container")!;
-  intervals.push(intervalA, intervalB, intervalC);
+  const target = event.target as HTMLFormElement;
+  const rating = target.parentElement!;
+  const value = target["rating"].value;
 
-  submit.classList.remove("anime-from-bottom");
-  star.classList.remove("anime-follow-path");
+  rate(target);
+  fall(target);
 
-  title.classList.add("anime-fade", "removed-from-reality");
-  typing.classList.add("anime-fade", "removed-from-reality");
-  choices.classList.add("anime-fade", "removed-from-reality");
-  submit.classList.add("anime-to-below");
-  star.classList.add("anime-to-below");
+  try {
+    rating.classList.remove("start");
+    rating.classList.add("loading");
 
-  title.addEventListener("animationend", () =>
-    intervals.forEach((interval) => clearInterval(interval))
-  );
+    await send_request(value);
+
+    rating.classList.remove("loading");
+    rating.classList.add("success");
+  } catch (error) {
+    console.log(error);
+
+    rating.classList.add("error");
+  }
 }
 
 function init() {
-  const form = document.querySelector(".rating");
+  const rating = document.querySelector(".rating")!;
+  const form = rating.querySelector(".form") as HTMLElement;
+  const first = form.querySelector(".line.first") as HTMLElement;
+  const text = form.querySelector(".typing.first") as HTMLElement;
 
-  form?.addEventListener("submit", handle_submit);
+  animate_line(first);
+  //kill the stars if the animation is canned
+  animate_star(form);
+  setTimeout(() => animate_typing(text, 33), 1330);
+
+  form.addEventListener("submit", handle_submit);
 }
 
 init();

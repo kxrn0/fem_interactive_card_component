@@ -17,14 +17,13 @@ function start_animation(root: Element, element: Element) {
   }, 16);
 }
 
-function animate_star() {
-  const rating = document.querySelector(".rating")!;
-  const star = rating.querySelector(".star");
+export default function animate_star(container: HTMLElement) {
+  const star = container.querySelector(".star");
   let interval = 0;
 
   star?.addEventListener("animationstart", (event) => {
     if ((event.target as Element).classList.contains("star"))
-      interval = start_animation(rating, star);
+      interval = start_animation(container, star);
   });
 
   star?.addEventListener("animationend", (event) => {
@@ -32,5 +31,3 @@ function animate_star() {
       clearInterval(interval);
   });
 }
-
-animate_star();

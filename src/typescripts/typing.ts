@@ -14,11 +14,9 @@ function map_words(words: string[], millisPerChar: number) {
   }, []);
 }
 
-function animate_typing() {
-  const container = document.querySelector(".typing") as HTMLDivElement;
+export default function animate_typing(container: HTMLElement, delay: number) {
   const text = container.dataset.text;
   const words = text?.split(" ");
-  const delay = 33;
   const split = map_words(words!, delay);
 
   split.forEach((item) => {
@@ -38,5 +36,3 @@ function animate_typing() {
       );
   });
 }
-
-setTimeout(() => animate_typing(), 1330);

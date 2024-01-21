@@ -188,10 +188,74 @@
   @keyframes fade-anime {
     from {
       opacity: 1;
+      visibility: visible;
     }
 
     to {
       opacity: 0;
+      visibility: hidden;
     }
+  }
+}
+
+.anime-rotate {
+  animation: rotate-anime calc(3 * var(--duration)) infinite;
+
+  @keyframes rotate-anime {
+    from {
+      transform: rotate(0);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+// .anime-disappear {
+// visibility: visible;
+
+@keyframes disappear-anime {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+// }
+
+@keyframes arrive-anime {
+  from {
+    visibility: hidden;
+    opacity: 0;
+    filter: blur(5px);
+    transform: scale(5);
+  }
+
+  to {
+    visibility: visible;
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@keyframes leave-anime {
+  from {
+    visibility: visible;
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  to {
+    visibility: hidden;
+    opacity: 0;
+    filter: blur(5px);
+    transform: scale(5);
   }
 }

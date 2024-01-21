@@ -1,5 +1,4 @@
-function line() {
-  const line = document.querySelector(".line") as HTMLDivElement;
+export default function animate_line(line: HTMLElement) {
   const text = line.dataset.text;
 
   text?.split("").forEach((char, index) => {
@@ -13,5 +12,3 @@ function line() {
     line.append(pre);
   });
 }
-
-line();
