@@ -1,9 +1,9 @@
 function start_animation(root: Element, element: Element) {
   const rootRect = root.getBoundingClientRect();
-  const rect = element.getBoundingClientRect();
 
   return setInterval(() => {
     const plume = document.createElement("div");
+    const rect = element.getBoundingClientRect();
 
     plume.classList.add("plume");
     plume.style.setProperty("--top", `${rect.top - rootRect.top}px`);
