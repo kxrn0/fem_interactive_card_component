@@ -34,8 +34,8 @@ function send_request(value: number) {
 
 function rate(form: HTMLFormElement) {
   const rating = form.parentElement!;
-  const gameOverScreen = rating.querySelector(".game-over-screen")!;
-  const finalRating = gameOverScreen.querySelector(".final-rating")!;
+  const succScreen = rating.querySelector(".success-screen")!;
+  const finalRating = succScreen.querySelector(".final-rating")!;
   const finalRatingValue = form["rating"].value;
 
   finalRating.innerHTML = `You selected ${finalRatingValue} out of 5`;
@@ -59,8 +59,26 @@ async function handle_submit(event: SubmitEvent) {
 
     rating.classList.remove("loading");
     rating.classList.add("success");
+
+    const succLine = rating.querySelector(
+      ".success-screen .line"
+    ) as HTMLElement;
+    const succText = rating.querySelector(
+      ".success-screen .typing"
+    ) as HTMLElement;
+
+    animate_line(succLine);
+    animate_typing(succText, 33);
   } catch (error) {
     console.log(error);
+
+    const errLine = rating.querySelector(".error-screen .line") as HTMLElement;
+    const errText = rating.querySelector(
+      ".error-screen .typing"
+    ) as HTMLElement;
+
+    animate_line(errLine);
+    animate_typing(errText, 33);
 
     rating.classList.add("error");
   }

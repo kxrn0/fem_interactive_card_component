@@ -12,11 +12,15 @@
     }
   }
 
-  // &.success, &.error {}
-
-  &.start:not(.loading) {
+  &.start {
     .loading-screen {
-      animation: leave-anime calc(2 * var(--duration)) forwards;
+      visibility: hidden;
+
+      .content {
+        .spinner {
+          animation-play-state: paused;
+        }
+      }
     }
   }
 
@@ -27,6 +31,75 @@
       .content {
         .spinner {
           animation-play-state: running;
+        }
+      }
+    }
+  }
+
+  &.success,
+  &.error {
+    .loading-screen {
+      animation: leave-anime calc(2 * var(--duration)) forwards;
+
+      .content {
+        .spinner {
+          animation-play-state: paused;
+        }
+      }
+    }
+
+    .success-screen,
+    .error-screen {
+      svg {
+        --i: 4;
+      }
+
+      .message {
+        --i: 2;
+      }
+
+      svg,
+      .message {
+        animation: from-above-anime calc(var(--i) * var(--duration)) forwards;
+      }
+    }
+  }
+
+  &.start,
+  &.loading {
+    .success-screen {
+      visibility: hidden;
+    }
+
+    .error-screen {
+      visibility: hidden;
+    }
+  }
+
+  &.success {
+    .error-screen {
+      visibility: hidden;
+    }
+  }
+
+  &.error {
+    .success-screen {
+      visibility: hidden;
+    }
+  }
+
+  &.success {
+    visibility: visible;
+  }
+
+  &.error {
+    visibility: visible;
+
+    .error-screen {
+      svg {
+        path:not(:last-of-type) {
+          animation: background-anime calc(3 * var(--duration)) infinite;
+          animation-delay: calc(5 * var(--duration) * var(--i, 0) / 4);
         }
       }
     }
@@ -154,14 +227,6 @@
         }
       }
     }
-
-    .line {
-      .block {
-        animation-delay: calc(
-          2 * var(--duration) + var(--index) * var(--duration) / 5
-        );
-      }
-    }
   }
 
   .loading-screen {
@@ -169,7 +234,6 @@
     width: 100%;
     height: 100%;
     position: relative;
-    visibility: hidden;
 
     .content {
       width: 100px;
@@ -188,7 +252,6 @@
         grid-template-areas: "stack";
         place-items: center;
         align-content: center;
-        animation-play-state: paused;
 
         .circle {
           grid-area: stack;
@@ -213,10 +276,45 @@
     }
   }
 
-  .game-over-screen {
+  .success-screen,
+  .error-screen {
+    padding: 45px 40px;
     grid-area: stack;
-    position: relative;
-    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .typing {
+      justify-content: center;
+    }
+  }
+
+  .error-screen {
+    .retry {
+      background-color: var(--orange);
+      color: white;
+      text-decoration: none;
+      padding: 5px 20px;
+      border-radius: 500px;
+      margin-top: 24px;
+      transition: background-color var(--duration), color var(--duration);
+
+      @media (hover: hover) {
+        &:hover {
+          background-color: white;
+          color: var(--orange);
+        }
+      }
+    }
+  }
+
+  .message {
+    background-color: var(--dark-blue);
+    color: var(--orange);
+    padding: 5px 20px;
+    padding-top: 8px;
+    border-radius: 500px;
+    margin-top: 32px;
   }
 
   .line {
@@ -224,6 +322,12 @@
     color: white;
     display: flex;
     margin-top: 30px;
+
+    .block {
+      animation-delay: calc(
+        2 * var(--duration) + var(--index) * var(--duration) / 5
+      );
+    }
   }
 
   .typing {
@@ -231,9 +335,8 @@
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    gap: 5px;
+    column-gap: 5px;
     width: 340px;
-    height: 80px;
     margin-top: 7px;
   }
 }

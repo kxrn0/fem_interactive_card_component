@@ -3,20 +3,6 @@
   filter: blur(5px);
   transform: translateY(-50vh);
   animation: from-above-anime calc(var(--duration) / 5) forwards;
-
-  @keyframes from-above-anime {
-    from {
-      opacity: 0;
-      filter: blur(5px);
-      transform: translateY(-50vh);
-    }
-
-    to {
-      opacity: 1;
-      filter: blur(0);
-      transform: translateY(0);
-    }
-  }
 }
 
 .anime-from-left {
@@ -212,8 +198,41 @@
   }
 }
 
-// .anime-disappear {
-// visibility: visible;
+@keyframes background-anime {
+  from {
+    stroke: lightcoral;
+  }
+
+  25% {
+    stroke: indianred;
+  }
+
+  50% {
+    stroke: red;
+  }
+
+  75% {
+    stroke: firebrick;
+  }
+
+  to {
+    stroke: darkred;
+  }
+}
+
+@keyframes from-above-anime {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(-50vh);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
 
 @keyframes disappear-anime {
   from {
@@ -226,7 +245,6 @@
     opacity: 0;
   }
 }
-// }
 
 @keyframes arrive-anime {
   from {
