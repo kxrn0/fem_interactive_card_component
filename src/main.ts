@@ -91,7 +91,6 @@ function init() {
   const text = form.querySelector(".typing.first") as HTMLElement;
 
   animate_line(first);
-  //kill the stars if the animation is canned
   animate_star(form);
   setTimeout(() => animate_typing(text, 33), 1330);
 

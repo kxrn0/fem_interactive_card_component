@@ -1,9 +1,9 @@
 function start_animation(root: Element, element: Element) {
   const rootRect = root.getBoundingClientRect();
+  const rect = element.getBoundingClientRect();
 
   return setInterval(() => {
     const plume = document.createElement("div");
-    const rect = element.getBoundingClientRect();
 
     plume.classList.add("plume");
     plume.style.setProperty("--top", `${rect.top - rootRect.top}px`);
@@ -18,15 +18,15 @@ function start_animation(root: Element, element: Element) {
 }
 
 export default function animate_star(container: HTMLElement) {
-  const star = container.querySelector(".star");
+  const star = container.querySelector(".star")!;
   let interval = 0;
 
-  star?.addEventListener("animationstart", (event) => {
+  star.addEventListener("animationstart", (event) => {
     if ((event.target as Element).classList.contains("star"))
       interval = start_animation(container, star);
   });
 
-  star?.addEventListener("animationend", (event) => {
+  star.addEventListener("animationend", (event) => {
     if ((event.target as Element).classList.contains("star"))
       clearInterval(interval);
   });

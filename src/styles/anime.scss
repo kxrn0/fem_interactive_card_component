@@ -103,6 +103,19 @@
     offset-path: path("M 0 0 Q 50 200 500 300");
     animation: follow-path-a-anime calc(5 * var(--duration)) forwards;
     transform: translate(50%, 50%);
+
+    @media screen and (max-width: 450px) {
+      background-color: var(--dark-blue);
+      offset-path: none;
+      animation: none;
+      transform: translate(0, 0);
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    transform: translate(0, 0);
   }
 
   @keyframes follow-path-a-anime {
